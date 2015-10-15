@@ -1,0 +1,6 @@
+# Python
+*.pyc
+*~
+
+# No real config files in git
+*.cfg

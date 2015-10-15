@@ -1,0 +1,75 @@
+<!DOCTYPE html
+	  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+<head>
+<title>Data Provider Validation and Registration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="image/x-icon" rel="shortcut icon" href="/favicon.ico" />
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+</head>
+<body bgcolor="#FFFFFF">
+<table width="800" border="1" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF" height="70" bordercolor="#CCCCCC">
+   <tr>
+     <td width="98" rowspan="4">
+       <div align="left"><a href="http://www.openarchives.org"
+            target="/index.html"><img
+src="/images/100.gif" width="100" height="70" align="absbottom"
+border="0"></a></div>
+     </td>
+     <td width="702" bgcolor="#FFFFFF" height="49" valign="middle"
+colspan="3" rowspan="4">
+       <div align="center"><font face="Verdana, Arial, Helvetica,
+sans-serif" size="5" color="#FFFFFF"><font face="Verdana, Arial,
+Helvetica, sans-serif" size="5" color="#FFFFFF"><font size="7"
+color="#000000" face="Arial, Helvetica, sans-serif"><b><font
+face="Verdana, Arial, Helvetica, sans-serif" color="#000066"
+size="5">D&nbsp;a&nbsp;t&nbsp;a&nbsp; &nbsp;P&nbsp;r&nbsp;o&nbsp;v&nbsp;i&nbsp;d&nbsp;e&nbsp;r&nbsp; &nbsp;V&nbsp;a&nbsp;l&nbsp;i&nbsp;d&nbsp;a&nbsp;t&nbsp;i&nbsp;o&nbsp;n&nbsp; &nbsp;a&nbsp;n&nbsp;d&nbsp; &nbsp;R&nbsp;e&nbsp;g&nbsp;i&nbsp;s&nbsp;t&nbsp;r&nbsp;a&nbsp;t&nbsp;i&nbsp;o&nbsp;n</font></b></font></font><font size="7" color="#000000"
+face="Arial, Helvetica, sans-serif"><b></b></font></font></div>
+     </td>
+   </tr>
+</table>
+
+<p>Please enter base URL of the repository to be validated and/or registered:</p>
+
+<form method="POST" action="{{ url_for('run_validate') }}">
+{{ form.csrf_token }}
+<p>
+{{ form.base_url.label }}<br>
+{{ form.base_url(rows=5, cols=40) }}
+</p>
+<p>
+{% for error in form.recaptcha.errors %}
+  {{ error }}
+{% endfor %}
+{{ form.recaptcha }}
+</p>
+<p>
+  <input type="submit" value="Validate baseURL"/>
+</p>
+</form>
+
+<p>Note that the base URL you enter here must EXACTLY match the 
+base URL returned in the Identify response. It must match in case 
+(http://Wibble.org/ does not match http://wibble.org/) and include any 
+trailing slashes etc.</p>
+
+<p>Submitting this form with make some initial tests of the validation 
+of the base URL you have submitted and then send an email to the adminEmail 
+address specified in the Identify response. The email will contain a URL
+to confirm the request to validate and/or register the repository. This
+procedure has been adopted so that only the administrators of a repository
+can run the validation and registration tests.</p>
+
+<p>If you want to update an existing registration where the base URL has
+not changed then simply use this form and re-run the registration process. 
+If you have changed the base URL then please send email to 
+<a href="mailto:openarchives-l@cornell.edu">openarchives-l@cornell.edu</a> 
+with details of the old baseURL so that the old record can be deleted.
+See <a href="/pmh/register_data_provider">registering as a data provider</a> 
+for more details of registration and validation.</p>
+
+<hr />
+
+</body>
+</html>
