@@ -30,13 +30,17 @@ face="Arial, Helvetica, sans-serif"><b></b></font></font></div>
    </tr>
 </table>
 
-<p>Please enter base URL of the repository to be validated and/or registered:</p>
+{% for msg in get_flashed_messages() %}
+<p><em> {{ msg }} </em></p>
+{% endfor %}
+
+<p>Please enter OAI-PMH base URL of the repository to be validated and/or registered:</p>
 
 <form method="POST" action="{{ url_for('run_validate') }}">
 {{ form.csrf_token }}
 <p>
 {{ form.base_url.label }}<br>
-{{ form.base_url(rows=5, cols=40) }}
+{{ form.base_url(rows=1, cols=80) }}
 </p>
 <p>
 {% for error in form.recaptcha.errors %}
@@ -55,10 +59,11 @@ base URL returned in the Identify response. It must match in case
 trailing slashes etc.</p>
 
 <p>Submitting this form with make some initial tests of the validation 
-of the base URL you have submitted and then send an email to the adminEmail 
-address specified in the Identify response. The email will contain a URL
-to confirm the request to validate and/or register the repository. This
-procedure has been adopted so that only the administrators of a repository
+of the base URL you have submitted and then send an email to the 
+<code>adminEmail</code> address specified in the Identify response. The
+email will contain a URL to confirm the request to validate and/or 
+register the repository. This procedure has been adopted so that only 
+the administrators of a repository
 can run the validation and registration tests.</p>
 
 <p>If you want to update an existing registration where the base URL has

@@ -6,7 +6,7 @@ Work to replace https://www.openarchives.org/Register/ValidateSite
 reCaptcha support based on flask-wtf example code from
 https://github.com/lepture/flask-wtf/tree/master/examples/recaptcha
 """
-from flask import Flask, render_template, flash, session, redirect, url_for
+from flask import Flask, render_template, flash, session, redirect, url_for, logging
 from wtforms import TextAreaField
 from wtforms.validators import DataRequired
 from flask.ext.wtf import Form
@@ -14,6 +14,7 @@ from flask.ext.wtf.recaptcha import RecaptchaField
 import os.path
 
 app = Flask(__name__)
+logger = logging.create_logger(app) #FIXME - what is best way to set this up?
 cfg = 'oaipmh_validation_service.cfg'
 app.config.from_pyfile(cfg+'_default') #assume default always present
 app.config.from_pyfile(cfg, silent=True) #override for real config
@@ -45,6 +46,8 @@ def run_validate():
                                base_url=form.base_url.data)
     else:
         # go back and try again...
+        #logger.info("Invalid form entry, redirecting back")
+        flash("Invalid form submission, please try again.")
         return redirect(url_for("validate"))
 
 if __name__ == "__main__":
