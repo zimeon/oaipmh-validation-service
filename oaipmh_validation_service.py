@@ -12,6 +12,7 @@ from wtforms.validators import DataRequired
 from flask.ext.wtf import Form
 from flask.ext.wtf.recaptcha import RecaptchaField
 import os.path
+import uuid
 
 app = Flask(__name__)
 logger = logging.create_logger(app) #FIXME - what is best way to set this up?
@@ -42,8 +43,11 @@ def run_validate():
     form = ValidateForm()
     if form.validate_on_submit():
         session['base_url'] = form.base_url.data
+        session['uuid'] = str(uuid.uuid1())
+        
         return render_template("validate_run.html",
-                               base_url=form.base_url.data)
+                               base_url=form.base_url.data,
+                               uuid=session['uuid'] )
     else:
         # go back and try again...
         #logger.info("Invalid form entry, redirecting back")
